@@ -1,0 +1,90 @@
+name: Setup Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Verify kit setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: TypeScript check (scripts)
+        run: npx tsc --noEmit
+
+      - name: Verify template structure
+        run: |
+          echo "Checking required template files..."
+          files=(
+            "template/playwright.config.ts"
+            "template/tsconfig.json"
+            "template/package.json"
+            "template/.env.example"
+            "template/helpers/navigation.ts"
+            "template/helpers/env.ts"
+            "template/fixtures/index.ts"
+            "template/constants/routes.ts"
+            "template/page-objects/base/base-page.ts"
+            "template/setup/auth.setup.ts"
+          )
+          for f in "${files[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "❌ Missing: $f"
+              exit 1
+            else
+              echo "✅ Found: $f"
+            fi
+          done
+
+      - name: Verify prompts
+        run: |
+          echo "Checking prompts..."
+          for i in 00 01 02 03 04 05 06 07 08; do
+            found=$(ls prompts/${i}-*.md 2>/dev/null | head -1)
+            if [ -z "$found" ]; then
+              echo "❌ Missing prompt: prompts/${i}-*.md"
+              exit 1
+            else
+              echo "✅ Found: $found"
+            fi
+          done
+
+      - name: Verify docs
+        run: |
+          echo "Checking docs..."
+          docs=(
+            "docs/getting-started.md"
+            "docs/how-it-works.md"
+            "docs/folder-structure.md"
+            "docs/agent-setup.md"
+            "docs/writing-tests.md"
+            "docs/running-tests.md"
+            "docs/agent-prompts.md"
+            "docs/faq.md"
+          )
+          for f in "${docs[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "❌ Missing: $f"
+              exit 1
+            else
+              echo "✅ Found: $f"
+            fi
+          done
+
+      - name: Summary
+        run: echo "✅ All checks passed — kit is ready to use as a GitHub Template"

@@ -1,0 +1,22 @@
+{
+  "name": "qa-starter-kit",
+  "version": "1.0.0",
+  "description": "QA Automation Starter Kit — generate Playwright tests for any web app using AI agents",
+  "private": true,
+  "scripts": {
+    "scaffold": "ts-node --esm scripts/scaffold.ts",
+    "scan": "ts-node --esm scripts/scan.ts",
+    "rescan": "ts-node --esm scripts/rescan.ts"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.14.0",
+    "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

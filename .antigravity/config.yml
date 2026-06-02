@@ -1,0 +1,43 @@
+name: qa-automation
+version: 1.0.0
+
+# Files that give the agent context about this project
+context:
+  - .env
+  - code-context/summary.json
+  - code-context/components.json
+  - code-context/routes.json
+
+# Rules the agent must follow
+rules:
+  - Use helpers/navigation.ts gotoWithRetry() for all navigation
+  - Use page-objects/ for all locators — never invent selectors
+  - Use constants/routes.ts for all URLs — never hardcode them
+  - Run npx tsc --noEmit after every code change
+  - Follow prompts/ files for task instructions
+  - Never commit auth/, page-maps/, code-context/, or .env
+
+# Where to find task prompts
+prompts_dir: prompts/
+
+# Key prompts
+prompts:
+  quick_start: prompts/00-quick-start.md
+  scan_pages: prompts/01-scan-pages.md
+  scan_codebase: prompts/02-scan-codebase.md
+  generate_baseline: prompts/03-generate-baseline.md
+  generate_e2e: prompts/04-generate-e2e.md
+  generate_regression: prompts/05-generate-regression.md
+  fix_errors: prompts/06-fix-errors.md
+  cleanup: prompts/07-cleanup.md
+  rescan: prompts/08-rescan.md
+
+# Folders the agent should never read or modify
+ignore:
+  - auth/
+  - page-maps/
+  - snapshots/
+  - code-context/
+  - test-results/
+  - node_modules/
+  - .env

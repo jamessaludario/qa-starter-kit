@@ -1,0 +1,48 @@
+---
+description: QA Automation rules for Playwright + TypeScript
+globs: ["tests/**", "page-objects/**", "helpers/**", "fixtures/**", "constants/**"]
+alwaysApply: true
+---
+
+# QA Automation Rules
+
+## Always do
+
+- Read `.env` for `BASE_URL` and app config before starting
+- Read `code-context/` before generating any tests
+- Use `helpers/navigation.ts` `gotoWithRetry()` for all navigation
+- Use `page-objects/` locators — never hardcode selectors
+- Use `constants/routes.ts` — never hardcode URLs
+- Run `npx tsc --noEmit` after every code change and fix all errors
+
+## Never do
+
+- Invent selectors not confirmed in `page-maps/`
+- Hardcode URLs — use ROUTES constants
+- Recreate helpers that already exist in `helpers/`
+- Commit `auth/`, `page-maps/`, `code-context/`, or `.env`
+- Use `.then()` promise chains — always use `async/await`
+
+## File structure
+
+```
+tests/baseline/    → page load and element visibility tests
+tests/e2e/         → full user flow tests
+tests/regression/  → edge cases and negative tests
+tests/marketing/   → public / landing page tests
+page-objects/      → one class per page, grouped by role
+helpers/           → shared utilities
+constants/         → routes and other constants
+fixtures/          → Playwright test fixtures
+```
+
+## When generating tests
+
+- Read `prompts/03-generate-baseline.md` for baseline tests
+- Read `prompts/04-generate-e2e.md` for e2e tests
+- Read `prompts/05-generate-regression.md` for regression tests
+- Follow the existing patterns in `page-objects/` exactly
+
+## Prompt files reference
+
+All task prompts are in `prompts/`. Read the relevant one before starting any task.

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": [
+    "tests/**/*",
+    "page-objects/**/*",
+    "helpers/**/*",
+    "fixtures/**/*",
+    "constants/**/*",
+    "types/**/*",
+    "utils/**/*",
+    "setup/**/*"
+  ],
+  "exclude": ["node_modules"]
+}
