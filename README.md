@@ -3,7 +3,7 @@
 > Clone once. Generate tests for any web app.
 > No prior automation experience needed.
 
-[![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?style=for-the-badge&logo=github)](https://github.com/YOUR_ORG/qa-starter-kit/generate)
+[![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?style=for-the-badge&logo=github)](https://github.com/jamessaludario/qa-starter-kit/generate)
 
 ---
 
