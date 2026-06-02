@@ -60,7 +60,7 @@ See [docs/agent-setup.md](docs/agent-setup.md) for per-agent instructions.
 
 1. Clone this starter kit:
    ```bash
-   git clone https://github.com/YOUR_ORG/qa-starter-kit
+   git clone https://github.com/jamessaludario/qa-starter-kit
    ```
 2. `cd qa-starter-kit && npm install`
 3. `cp .env.example .env`
