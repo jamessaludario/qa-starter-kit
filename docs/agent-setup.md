@@ -75,6 +75,37 @@ For manual prompts: type or paste into the Claude chat.
 
 ---
 
+## Fabric
+
+**Best for:** users who want a standalone desktop app with built-in multi-model support and no IDE required
+
+**Setup:**
+1. Download Fabric from [farpointalpha.com/fabric](https://farpointalpha.com/fabric)
+2. Open Fabric and go to **File → Open Project** — select your project folder
+3. Add an API key in **Settings → Models** (free options: Google Gemini, Mistral, OpenRouter)
+
+**How to use prompts:**
+- Type `/` in the chat bar to see available slash commands — the `prompts/` folder is pre-wired as Fabric commands
+- Or paste any prompt from `prompts/` directly into the chat
+
+**Slash commands available:**
+| Command | What it does |
+|---------|-------------|
+| `/scan-pages` | Scans all pages of your app |
+| `/scan-codebase` | Analyzes your app source code |
+| `/generate-baseline` | Generates baseline smoke tests |
+| `/generate-e2e` | Generates end-to-end flow tests |
+| `/generate-regression` | Generates regression tests |
+| `/fix-errors` | Fixes TypeScript or Playwright errors |
+| `/cleanup` | Cleans up and deduplicates tests |
+| `/rescan` | Rescans after app changes |
+
+**Tip:** Fabric supports any model provider. For free usage, select Gemini Flash (Google) or a free OpenRouter model. Switch to Claude Sonnet or GPT-4 only for complex generation tasks.
+
+See the full guide: [using-with-fabric.md](using-with-fabric.md)
+
+---
+
 ## Antigravity
 
 **Best for:** teams using Antigravity
