@@ -6,7 +6,8 @@
   "scripts": {
     "scaffold": "ts-node --esm scripts/scaffold.ts",
     "scan": "ts-node --esm scripts/scan.ts",
-    "rescan": "ts-node --esm scripts/rescan.ts"
+    "rescan": "ts-node --esm scripts/rescan.ts",
+    "demo": "ts-node --esm scripts/demo-server.ts"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",

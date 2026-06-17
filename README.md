@@ -9,18 +9,15 @@
 
 ## What is this?
 
-A ready-made Playwright + TypeScript setup that uses AI agents to scan your app and write test scripts for you.
+A hybrid learning playground and ready-made **Playwright + TypeScript** test suite setup. It allows you to:
+1. **Learn QA Automation**: Start the built-in local Sandbox Demo App, follow step-by-step tutorial guides, and write Page Object Models and tests manually.
+2. **Accelerate with AI Agents**: Scan pages automatically, write baseline test scripts, and repair broken locators using AI coding agents (Claude, Cursor, Antigravity, etc.).
 
-**You bring:**
-- A web app URL
-- An AI coding agent (any of the ones listed below)
-
-**The kit gives you:**
-- Automatic page scanning
-- Auto-generated test scripts
-- A clear folder structure
-- Copy-paste prompts for every task
-- Documentation written for humans
+**The kit provides:**
+- 🎮 **Local Sandbox App**: A beautiful mock SaaS app to write and run tests against safely.
+- 📚 **Beginner Tutorial**: A step-by-step guide explaining selectors, POM, assertions, and test runners.
+- 🤖 **AI Scaffolder & Prompts**: Standardized prompts to guide AI agents in scanning and writing code.
+- 📂 **Clear POM Structure**: Organized folder design to scale testing for small or large apps.
 
 ---
 
@@ -43,31 +40,48 @@ See [docs/agent-setup.md](docs/agent-setup.md) for per-agent instructions.
 
 ## Quick Start
 
-### Option A — GitHub Template (recommended)
+## Quick Start
 
-1. Click **"Use this template"** on GitHub
-2. Name your new repo (e.g. `my-app-tests`)
-3. Clone **your** new repo:
-   ```bash
-   git clone https://github.com/YOU/my-app-tests
-   ```
-4. `cd my-app-tests && npm install`
-5. `cp .env.example .env`
-6. Fill in `BASE_URL` in `.env`
-7. Open in your AI agent and paste `prompts/00-quick-start.md`
+### 🏁 Learn Automation (Recommended first step)
 
-### Option B — Scaffold Script
+You can run and test the built-in Sandbox App immediately:
 
-1. Clone this starter kit:
+1. Clone this repository:
    ```bash
    git clone https://github.com/jamessaludario/qa-starter-kit
+   cd qa-starter-kit
    ```
-2. `cd qa-starter-kit && npm install`
-3. `cp .env.example .env`
-4. Fill in `PROJECT_NAME` and `BASE_URL` in `.env`
-5. Run: `npm run scaffold`
-6. `cd ../<your-project-name>-tests`
-7. Follow the instructions printed by the scaffold
+2. Install dependencies and browser engines:
+   ```bash
+   npm install
+   npx playwright install
+   ```
+3. Start the local Sandbox App:
+   ```bash
+   npm run demo
+   ```
+4. Open [docs/tutorial.md](docs/tutorial.md) and follow the step-by-step instructions to run your first tests!
+
+---
+
+### 🚀 Scaffold tests for YOUR web app
+
+When you are ready to test your own live website or repository:
+
+1. Clone or click **"Use this template"** on GitHub to create a fresh repository.
+2. Run `npm install` and copy the environment template:
+   ```bash
+   cp .env.example .env
+   ```
+3. Open `.env` and fill in `PROJECT_NAME`, `BASE_URL` (your app's URL), and user roles.
+4. Scaffold your new tests workspace:
+   ```bash
+   npm run scaffold
+   ```
+5. Open the newly created `../<your-app-name>-tests` folder in your AI agent and run the quick start prompt:
+   ```markdown
+   prompts/00-quick-start.md
+   ```
 
 ---
 
@@ -76,10 +90,12 @@ See [docs/agent-setup.md](docs/agent-setup.md) for per-agent instructions.
 > Run these from **your generated project folder** (after scaffolding)
 
 ```bash
-npm test                # run all tests
-npm run test:smoke      # quick smoke check (~5 min)
-npm run scan            # print scan prompt for your agent
-npm run report          # open HTML test report
+npm run demo            # start the local sandbox demo app (http://localhost:3000)
+npm test                # run all tests (including tutorial tests)
+npm run test:ui         # launch Playwright interactive UI runner
+npm run test:smoke      # run quick smoke check tests
+npm run scan            # print scan prompt for your AI agent
+npm run report          # open HTML test execution report
 npx playwright install  # install browser binaries (first time only)
 ```
 
@@ -149,6 +165,7 @@ See [docs/how-it-works.md](docs/how-it-works.md) for the full pipeline.
 
 ## Need help?
 
+- [Beginner Tutorial Guide](docs/tutorial.md)
 - [Getting Started](docs/getting-started.md)
 - [How it Works](docs/how-it-works.md)
 - [Agent Setup Guide](docs/agent-setup.md)

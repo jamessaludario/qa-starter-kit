@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Starter Kit - Demo Application</title>
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      
+      /* Light Mode Palette */
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-light: #e0e7ff;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --danger-light: #fee2e2;
+      --border-color: #e2e8f0;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(226, 232, 240, 0.8);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    html.dark {
+      /* Dark Mode Palette */
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-tertiary: #1f2937;
+      --text-primary: #f9fafb;
+      --text-secondary: #d1d5db;
+      --text-muted: #6b7280;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --accent-light: #312e81;
+      --success: #10b981;
+      --success-light: #064e3b;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --danger-light: #7f1d1d;
+      --border-color: #374151;
+      --glass-bg: rgba(17, 24, 39, 0.7);
+      --glass-border: rgba(55, 65, 81, 0.8);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Common Components */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.625rem 1.25rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-primary {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    .btn-secondary {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+    .btn-secondary:hover {
+      background-color: var(--border-color);
+      transform: translateY(-1px);
+    }
+    .btn-danger {
+      background-color: var(--danger);
+      color: #ffffff;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-user {
+      background-color: var(--accent-light);
+      color: var(--accent);
+    }
+    .badge-admin {
+      background-color: #fef3c7;
+      color: #d97706;
+    }
+    .badge-guest {
+      background-color: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+
+    /* Layout structure */
+    header {
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 4.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    .logo-icon {
+      background: linear-gradient(135deg, var(--accent) 0%, #a855f7 100%);
+      color: white;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      box-shadow: 0 4px 8px rgba(99, 102, 241, 0.2);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-link {
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .nav-link:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Views */
+    .view-section {
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .view-section.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Home Landing Page ─────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+      line-height: 1.15;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 72rem;
+      margin: 0 auto 5rem;
+    }
+    .feature-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent);
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background-color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ── Pricing Page ─────────────────────────────────────────── */
+    .pricing-container {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+    .pricing-header h2 {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+    }
+    .pricing-header p {
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+    }
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      justify-content: center;
+    }
+    .pricing-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 3rem 2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .pricing-card.premium {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-lg);
+    }
+    .pricing-card.premium .badge-premium {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background-color: var(--accent);
+      color: white;
+    }
+    .pricing-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .pricing-card .price {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-card .price span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 2rem;
+      width: 100%;
+      text-align: left;
+    }
+    .pricing-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--bg-tertiary);
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    /* ── Auth Forms (Login / Signup) ────────────────────────── */
+    .auth-page-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem;
+      flex: 1;
+    }
+    .auth-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.25rem;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 28rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .auth-card h2 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .auth-card p.subtitle {
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+    .auth-helper-credentials {
+      background-color: var(--bg-tertiary);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.825rem;
+      border: 1px dashed var(--border-color);
+    }
+    .auth-helper-credentials h4 {
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    .auth-helper-credentials ul {
+      list-style: none;
+      color: var(--text-secondary);
+    }
+    .auth-helper-credentials code {
+      background-color: var(--bg-secondary);
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+      font-weight: 600;
+    }
+
+    .error-msg {
+      background-color: var(--danger-light);
+      color: var(--danger);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      animation: shake 0.2s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    /* ── Dashboard Layout ─────────────────────────────────────── */
+    .dashboard-layout {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 4.5rem);
+    }
+    .sidebar {
+      width: 16rem;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .sidebar-item:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    .sidebar-item.active {
+      background-color: var(--accent-light);
+      color: var(--accent);
+    }
+    .dashboard-content {
+      flex: 1;
+      padding: 3rem;
+      max-width: 64rem;
+    }
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .dashboard-header h1 {
+      font-size: 2rem;
+    }
+
+    /* Task App inside Dashboard */
+    .task-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .task-form {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .task-form input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+    }
+    .task-form input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      animation: slideIn 0.2s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .task-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .task-item-checkbox {
+      width: 1.15rem;
+      height: 1.15rem;
+      cursor: pointer;
+    }
+    .task-item-text {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .task-item.completed .task-item-text {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    /* Settings View */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Admin View */
+    .admin-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .metric-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .metric-card h4 {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .metric-card .value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .admin-users-section {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .admin-users-section h3 {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Responsive Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+    th {
+      font-weight: 600;
+      color: var(--text-muted);
+      background-color: var(--bg-primary);
+    }
+    td {
+      color: var(--text-primary);
+    }
+    .user-blocked {
+      opacity: 0.6;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--accent);
+      border-left: 5px solid var(--accent);
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 500;
+      animation: slideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideLeft {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" data-testid="toast-notification">
+    <span id="toast-message">Task updated!</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-container" onclick="navigate('/')">
+      <div class="logo-icon">Q</div>
+      <span>QA Academy</span>
+    </div>
+    
+    <!-- Navigation Links -->
+    <nav class="nav-links">
+      <span class="nav-link" id="nav-home" onclick="navigate('/')">Home</span>
+      <span class="nav-link" id="nav-pricing" onclick="navigate('/pricing')">Pricing</span>
+      <span class="nav-link" id="nav-dashboard" onclick="navigate('/dashboard')" style="display:none;">Dashboard</span>
+      <span class="nav-link" id="nav-admin" onclick="navigate('/admin')" style="display:none;">Admin Admin</span>
+    </nav>
+
+    <!-- Theme and Auth buttons -->
+    <div class="auth-actions">
+      <button class="btn btn-secondary" id="theme-toggle" onclick="toggleTheme()" data-testid="theme-toggle">Theme</button>
+      <div id="guest-header-actions" style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-secondary" onclick="navigate('/login')" id="header-login-btn">Sign In</button>
+        <button class="btn btn-primary" onclick="navigate('/signup')">Sign Up</button>
+      </div>
+      <div id="user-header-actions" style="display: none; align-items: center; gap: 1rem;">
+        <span id="header-user-badge" class="badge">User</span>
+        <button class="btn btn-secondary" onclick="logout()" id="header-logout-btn" data-testid="logout-button">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Area -->
+  <main>
+
+    <!-- 1. LANDING PAGE VIEW -->
+    <section id="view-home" class="view-section active">
+      <div class="hero">
+        <h1>Learn Test Automation by Doing</h1>
+        <p>A beautiful local sandbox environment designed specifically to help you build, run, and master Playwright test scripts. No mock URLs, no server blocks, and complete control.</p>
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+          <button class="btn btn-primary btn-lg" onclick="navigate('/signup')" data-testid="get-started-btn">Get Started Now</button>
+          <button class="btn btn-secondary btn-lg" onclick="navigate('/pricing')">View Pricing</button>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card" data-testid="feature-card">
+          <h3>Page Object Model (POM)</h3>
+          <p>Learn to structure tests cleanly by separating element locators from spec script logic. Simple to maintain and scale.</p>
+        </div>
+        <div class="feature-card" data-testid="feature-card">
+          <h3>Authentication Caching</h3>
+          <p>Practice writing session cache setups using storageState so your tests don't have to log in on every single run.</p>
+        </div>
+        <div class="feature-card" data-testid="feature-card">
+          <h3>Admin Panel Testing</h3>
+          <p>Write tests simulating multiple access roles, user lists, and toggle actions within dynamic dashboards.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PRICING VIEW -->
+    <section id="view-pricing" class="view-section">
+      <div class="pricing-container">
+        <div class="pricing-header">
+          <h2>Simple, Transparent Pricing</h2>
+          <p>Learn automation on a budget that fits your scale.</p>
+        </div>
+        
+        <div class="pricing-cards">
+          <div class="pricing-card" data-testid="pricing-tier-free">
+            <h3>Starter</h3>
+            <div class="price">$0<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>1 Sandbox Project</li>
+              <li>Basic Test Scanners</li>
+              <li>Community Support</li>
+            </ul>
+            <button class="btn btn-secondary" onclick="navigate('/signup')" style="width: 100%;">Choose Starter</button>
+          </div>
+          
+          <div class="pricing-card premium" data-testid="pricing-tier-pro">
+            <span class="badge badge-premium">Popular</span>
+            <h3>Automation Pro</h3>
+            <div class="price">$29<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>Unlimited Sandbox Projects</li>
+              <li>AI Test Script Scaffolder</li>
+              <li>Advanced POM Generator</li>
+              <li>Priority Support</li>
+            </ul>
+            <button class="btn btn-primary" onclick="navigate('/signup')" style="width: 100%;">Upgrade to Pro</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. LOGIN VIEW -->
+    <section id="view-login" class="view-section">
+      <div class="auth-page-container">
+        <div class="auth-card">
+          <h2>Welcome Back</h2>
+          <p class="subtitle">Log in to enter your automated sandbox</p>
+
+          <div id="login-error-container" class="error-msg" data-testid="login-error-msg" style="display: none;">
+            Invalid email or password.
+          </div>
+
+          <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="login-email">Email Address</label>
+              <input type="email" id="login-email" required placeholder="you@example.com" data-testid="email-input" aria-label="Email Address">
+            </div>
+            <div class="form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label for="login-password">Password</label>
+                <a href="/forgot-password" onclick="event.preventDefault(); navigate('/forgot-password')" style="font-size: 0.8rem;">Forgot?</a>
+              </div>
+              <input type="password" id="login-password" required placeholder="••••••••" data-testid="password-input" aria-label="Password">
+            </div>
+
+            <div class="auth-helper-credentials">
+              <h4>Demo Credentials</h4>
+              <ul>
+                <li>User: <code>user@example.com</code> / <code>password123</code></li>
+                <li>Admin: <code>admin@example.com</code> / <code>password123</code></li>
+              </ul>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" data-testid="submit-login">Sign In</button>
+          </form>
+          
+          <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary);">
+            Don't have an account? <a href="/signup" onclick="event.preventDefault(); navigate('/signup')">Sign up</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SIGNUP VIEW -->
+    <section id="view-signup" class="view-section">
+      <div class="auth-page-container">
+        <div class="auth-card">
+          <h2>Create Account</h2>
+          <p class="subtitle">Set up a demo profile and try out the app</p>
+          
+          <div id="signup-error-container" class="error-msg" data-testid="signup-error-msg" style="display: none;">
+            Invalid email pattern or password.
+          </div>
+
+          <form id="signup-form" onsubmit="handleSignup(event)">
+            <div class="form-group">
+              <label for="signup-name">Full Name</label>
+              <input type="text" id="signup-name" required placeholder="John Doe" data-testid="signup-name-input">
+            </div>
+            <div class="form-group">
+              <label for="signup-email">Email Address</label>
+              <input type="email" id="signup-email" required placeholder="john@example.com" data-testid="signup-email-input">
+            </div>
+            <div class="form-group">
+              <label for="signup-password">Password</label>
+              <input type="password" id="signup-password" required placeholder="Min 6 characters" data-testid="signup-password-input">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" data-testid="submit-signup">Register</button>
+          </form>
+          
+          <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary);">
+            Already have an account? <a href="/login" onclick="event.preventDefault(); navigate('/login')">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FORGOT PASSWORD VIEW -->
+    <section id="view-forgot-password" class="view-section">
+      <div class="auth-page-container">
+        <div class="auth-card">
+          <h2>Reset Password</h2>
+          <p class="subtitle">Mock password recovery utility</p>
+          
+          <div id="forgot-success-container" class="badge badge-user" style="display: none; width: 100%; padding: 0.75rem; margin-bottom: 1.25rem; border-radius: 0.5rem; text-align: center;">
+            Password reset instructions sent! (Simulated)
+          </div>
+
+          <form onsubmit="handleForgotPassword(event)">
+            <div class="form-group">
+              <label for="forgot-email">Email Address</label>
+              <input type="email" id="forgot-email" required placeholder="john@example.com" data-testid="forgot-email-input">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" data-testid="submit-forgot">Send Recovery Email</button>
+          </form>
+          
+          <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary);">
+            Remembered? <a href="/login" onclick="event.preventDefault(); navigate('/login')">Go to Login</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. USER DASHBOARD / AUTH LAYOUT -->
+    <section id="view-dashboard-layout" class="view-section">
+      <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-item active" id="side-dashboard" onclick="switchTab('dashboard')">Dashboard</div>
+          <div class="sidebar-item" id="side-settings" onclick="switchTab('settings')">Settings</div>
+          <div class="sidebar-item" id="side-admin-panel" style="display:none;" onclick="switchTab('admin')">Admin Users</div>
+          <div class="sidebar-item" onclick="logout()" style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 1.5rem; color: var(--danger)">Log Out</div>
+        </aside>
+
+        <!-- Dynamic Dashboard Panel -->
+        <div class="dashboard-content">
+          
+          <!-- TAB 1: User Tasks Dashboard -->
+          <div id="tab-dashboard" class="tab-panel">
+            <div class="dashboard-header">
+              <div>
+                <h1>Dashboard</h1>
+                <p style="color: var(--text-secondary);">Manage your testing and learning task flow.</p>
+              </div>
+              <span id="dashboard-role-badge" class="badge badge-user" data-testid="role-badge">User Role</span>
+            </div>
+
+            <div class="task-card">
+              <h3>My Tasks</h3>
+              <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">Add, delete, or complete tasks to learn element interaction testing.</p>
+
+              <form class="task-form" onsubmit="addTask(event)">
+                <input type="text" id="task-input" required placeholder="Write a new task name..." aria-label="New task name" data-testid="task-input">
+                <button type="submit" class="btn btn-primary" data-testid="add-task-button">Add Task</button>
+              </form>
+
+              <ul class="task-list" id="tasks-list" data-testid="tasks-list">
+                <!-- Dynamically filled -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- TAB 2: User Profile Settings -->
+          <div id="tab-settings" class="tab-panel" style="display:none;">
+            <div class="dashboard-header">
+              <div>
+                <h1>Settings</h1>
+                <p style="color: var(--text-secondary);">Update your profile information and layout preferences.</p>
+              </div>
+            </div>
+
+            <div class="task-card">
+              <h3>Profile Customization</h3>
+              <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">Simulate form submission and toggle checks.</p>
+
+              <form class="settings-grid" onsubmit="saveSettings(event)">
+                <div class="form-group">
+                  <label for="settings-name">Display Name</label>
+                  <input type="text" id="settings-name" required value="Guest User" data-testid="display-name-input">
+                </div>
+                <div class="form-group" style="display:flex; align-items:center; gap:0.75rem; margin-top: 0.5rem;">
+                  <input type="checkbox" id="settings-notifications" data-testid="notifications-toggle" style="width:1.2rem; height:1.2rem; cursor:pointer;">
+                  <label for="settings-notifications" style="margin-bottom:0; cursor:pointer;">Receive notifications of completed tests</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="align-self: flex-start;" data-testid="save-settings-btn">Save Settings</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- TAB 3: Admin User List Panel -->
+          <div id="tab-admin" class="tab-panel" style="display:none;">
+            <div class="dashboard-header">
+              <div>
+                <h1>Admin Center</h1>
+                <p style="color: var(--text-secondary);">Direct control over sandbox database users.</p>
+              </div>
+              <span class="badge badge-admin" data-testid="role-badge">Admin</span>
+            </div>
+
+            <!-- Stats -->
+            <div class="admin-metrics">
+              <div class="metric-card">
+                <h4>System CPU Load</h4>
+                <div class="value" id="cpu-load" data-testid="admin-cpu-value">4.2%</div>
+              </div>
+              <div class="metric-card">
+                <h4>Active Sessions</h4>
+                <div class="value" data-testid="admin-sessions-value">12</div>
+              </div>
+              <div class="metric-card">
+                <h4>Database Health</h4>
+                <div class="value" style="color: var(--success);" data-testid="admin-health-value">100%</div>
+              </div>
+            </div>
+
+            <!-- User list table -->
+            <div class="admin-users-section">
+              <h3>Registered Users</h3>
+              <div class="table-container">
+                <table data-testid="admin-users-table">
+                  <thead>
+                    <tr>
+                      <th>User Name</th>
+                      <th>Email Address</th>
+                      <th>System Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-users-tbody">
+                    <!-- Loaded dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 QA Academy Starter Kit. Built for learning automation.</p>
+  </footer>
+
+  <script>
+    // ── Simple Client-Side Database State ─────────────────────────────
+    let currentUser = null;
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    let tasks = [
+      { id: 1, text: "Learn Playwright Locator concepts", completed: true },
+      { id: 2, text: "Write the Login Page Object Model", completed: false },
+      { id: 3, text: "Run the test suite in Headed UI Mode", completed: false }
+    ];
+    let usersList = [
+      { email: "user@example.com", name: "Sarah Jenkins", role: "user", blocked: false },
+      { email: "admin@example.com", name: "System Administrator", role: "admin", blocked: false },
+      { email: "student@example.com", name: "Aspiring Tester", role: "user", blocked: true }
+    ];
+
+    // Theme Setup
+    if (currentTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+
+    function toggleTheme() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        showToast("Theme changed to Light Mode");
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        showToast("Theme changed to Dark Mode");
+      }
+    }
+
+    // ── Routing Handler ──────────────────────────────────────────────
+    function navigate(pathname) {
+      history.pushState(null, '', pathname);
+      handleRouting();
+    }
+
+    window.addEventListener('popstate', handleRouting);
+
+    function handleRouting() {
+      const path = window.location.pathname;
+      
+      // Hide all main views
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+
+      // Check auth cookies / localStorage (simulate auth state)
+      const token = localStorage.getItem('auth_token');
+      const role = localStorage.getItem('auth_role');
+      if (token && role) {
+        currentUser = { email: token, role: role };
+        // Setup header for logged-in user
+        document.getElementById('guest-header-actions').style.display = 'none';
+        document.getElementById('user-header-actions').style.display = 'flex';
+        document.getElementById('header-user-badge').innerText = role.toUpperCase();
+        document.getElementById('header-user-badge').className = `badge badge-${role}`;
+        
+        // Show tabs links
+        document.getElementById('nav-dashboard').style.display = 'inline-block';
+        if (role === 'admin') {
+          document.getElementById('nav-admin').style.display = 'inline-block';
+          document.getElementById('side-admin-panel').style.display = 'flex';
+        } else {
+          document.getElementById('nav-admin').style.display = 'none';
+          document.getElementById('side-admin-panel').style.display = 'none';
+        }
+      } else {
+        currentUser = null;
+        document.getElementById('guest-header-actions').style.display = 'flex';
+        document.getElementById('user-header-actions').style.display = 'none';
+        document.getElementById('nav-dashboard').style.display = 'none';
+        document.getElementById('nav-admin').style.display = 'none';
+      }
+
+      // Route mapping
+      if (path === '/' || path === '/index.html') {
+        document.getElementById('view-home').classList.add('active');
+      } else if (path === '/pricing') {
+        document.getElementById('view-pricing').classList.add('active');
+      } else if (path === '/login') {
+        if (currentUser) {
+          navigate(currentUser.role === 'admin' ? '/admin' : '/dashboard');
+          return;
+        }
+        document.getElementById('view-login').classList.add('active');
+      } else if (path === '/signup') {
+        if (currentUser) {
+          navigate('/dashboard');
+          return;
+        }
+        document.getElementById('view-signup').classList.add('active');
+      } else if (path === '/forgot-password') {
+        document.getElementById('view-forgot-password').classList.add('active');
+      } else if (path === '/dashboard') {
+        if (!currentUser) {
+          navigate('/login');
+          return;
+        }
+        document.getElementById('view-dashboard-layout').classList.add('active');
+        switchTab('dashboard');
+      } else if (path === '/settings') {
+        if (!currentUser) {
+          navigate('/login');
+          return;
+        }
+        document.getElementById('view-dashboard-layout').classList.add('active');
+        switchTab('settings');
+      } else if (path === '/admin' || path === '/admin/users' || path === '/admin/settings') {
+        if (!currentUser) {
+          navigate('/login');
+          return;
+        }
+        if (currentUser.role !== 'admin') {
+          showToast("Unauthorized! Admin access required.");
+          navigate('/dashboard');
+          return;
+        }
+        document.getElementById('view-dashboard-layout').classList.add('active');
+        switchTab('admin');
+      } else {
+        // Fallback 404 (Redirect to home)
+        navigate('/');
+      }
+
+      // Update active nav-link state styling
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.style.color = 'var(--text-secondary)';
+        link.style.fontWeight = '500';
+      });
+      if (path === '/') {
+        document.getElementById('nav-home').style.color = 'var(--accent)';
+      } else if (path === '/pricing') {
+        document.getElementById('nav-pricing').style.color = 'var(--accent)';
+      }
+    }
+
+    // ── Tab Management ───────────────────────────────────────────────
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.style.display = 'none');
+      document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+
+      const activePanel = document.getElementById(`tab-${tabId}`);
+      if (activePanel) activePanel.style.display = 'block';
+
+      const sidebarItem = document.getElementById(`side-${tabId === 'admin' ? 'admin-panel' : tabId}`);
+      if (sidebarItem) sidebarItem.classList.add('active');
+
+      if (tabId === 'dashboard') {
+        renderTasks();
+      } else if (tabId === 'settings') {
+        document.getElementById('settings-name').value = currentUser ? (currentUser.email.split('@')[0]) : "Guest User";
+      } else if (tabId === 'admin') {
+        renderAdminUsers();
+      }
+    }
+
+    // ── Authentication Actions ────────────────────────────────────────
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const pw = document.getElementById('login-password').value;
+      const errorDiv = document.getElementById('login-error-container');
+
+      errorDiv.style.display = 'none';
+
+      // Simulating a database check
+      const user = usersList.find(u => u.email === email);
+      if (user && pw === 'password123') {
+        if (user.blocked) {
+          errorDiv.innerText = "This account has been suspended by administration.";
+          errorDiv.style.display = 'block';
+          return;
+        }
+        
+        localStorage.setItem('auth_token', email);
+        localStorage.setItem('auth_role', user.role);
+        
+        // Setup authentication cookie simulation for Playwright tests
+        document.cookie = `session_token=${btoa(email)}; path=/; max-age=3600`;
+
+        showToast(`Welcome back, ${user.name}!`);
+        navigate(user.role === 'admin' ? '/admin' : '/dashboard');
+      } else {
+        errorDiv.innerText = "Invalid email or password.";
+        errorDiv.style.display = 'block';
+      }
+    }
+
+    function handleSignup(event) {
+      event.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const name = document.getElementById('signup-name').value;
+      const password = document.getElementById('signup-password').value;
+      const errorDiv = document.getElementById('signup-error-container');
+
+      errorDiv.style.display = 'none';
+
+      if (password.length < 6) {
+        errorDiv.innerText = "Password must be at least 6 characters long.";
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      if (usersList.some(u => u.email === email)) {
+        errorDiv.innerText = "An account with this email already exists.";
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      // Create new user in state
+      usersList.push({ email, name, role: 'user', blocked: false });
+      localStorage.setItem('auth_token', email);
+      localStorage.setItem('auth_role', 'user');
+      document.cookie = `session_token=${btoa(email)}; path=/; max-age=3600`;
+
+      showToast("Account created successfully!");
+      navigate('/dashboard');
+    }
+
+    function handleForgotPassword(event) {
+      event.preventDefault();
+      document.getElementById('forgot-success-container').style.display = 'block';
+      showToast("Verification link dispatched.");
+    }
+
+    function logout() {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('auth_role');
+      document.cookie = "session_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      currentUser = null;
+      showToast("Signed out successfully.");
+      navigate('/');
+    }
+
+    // ── Task Management Actions ───────────────────────────────────────
+    function renderTasks() {
+      const container = document.getElementById('tasks-list');
+      container.innerHTML = '';
+
+      if (tasks.length === 0) {
+        container.innerHTML = `<li style="padding: 1.5rem; text-align: center; color: var(--text-muted); font-style: italic;">No tasks yet. Create one above!</li>`;
+        return;
+      }
+
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = `task-item ${task.completed ? 'completed' : ''}`;
+        li.setAttribute('data-task-id', task.id);
+
+        li.innerHTML = `
+          <div class="task-item-left">
+            <input type="checkbox" class="task-item-checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})">
+            <span class="task-item-text">${escapeHtml(task.text)}</span>
+          </div>
+          <button class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="deleteTask(${task.id})" data-testid="delete-task-btn">Delete</button>
+        `;
+        container.appendChild(li);
+      });
+    }
+
+    function addTask(event) {
+      event.preventDefault();
+      const input = document.getElementById('task-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
+      tasks.push({ id: newId, text, completed: false });
+      input.value = '';
+      
+      renderTasks();
+      showToast("Task added successfully!");
+    }
+
+    function toggleTask(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        renderTasks();
+        showToast(task.completed ? "Task marked completed!" : "Task marked active.");
+      }
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      renderTasks();
+      showToast("Task deleted.");
+    }
+
+    // ── Settings Actions ─────────────────────────────────────────────
+    function saveSettings(event) {
+      event.preventDefault();
+      const name = document.getElementById('settings-name').value;
+      const isNotif = document.getElementById('settings-notifications').checked;
+      showToast(`Settings saved. Display name: ${name}`);
+    }
+
+    // ── Admin Actions ────────────────────────────────────────────────
+    function renderAdminUsers() {
+      const tbody = document.getElementById('admin-users-tbody');
+      tbody.innerHTML = '';
+
+      usersList.forEach(user => {
+        const tr = document.createElement('tr');
+        if (user.blocked) tr.className = 'user-blocked';
+
+        tr.innerHTML = `
+          <td style="font-weight:600;">${escapeHtml(user.name)}</td>
+          <td>${escapeHtml(user.email)}</td>
+          <td><span class="badge badge-${user.role}">${user.role.toUpperCase()}</span></td>
+          <td>
+            <span style="color: ${user.blocked ? 'var(--danger)' : 'var(--success)'}; font-weight: 600;">
+              ${user.blocked ? 'Suspended' : 'Active'}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="toggleBlockUser('${user.email}')" data-testid="block-user-${user.email}">
+              ${user.blocked ? 'Activate' : 'Suspend'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleBlockUser(email) {
+      const user = usersList.find(u => u.email === email);
+      if (user) {
+        if (user.email === currentUser.email) {
+          showToast("Cannot block your own active session!");
+          return;
+        }
+        user.blocked = !user.blocked;
+        renderAdminUsers();
+        showToast(`User status for ${user.email} updated.`);
+      }
+    }
+
+    // Simulated Dynamic CPU Metric Loop
+    setInterval(() => {
+      const cpuVal = document.getElementById('cpu-load');
+      if (cpuVal && document.getElementById('tab-admin').style.display !== 'none') {
+        const rand = (Math.random() * 8 + 2).toFixed(1);
+        cpuVal.innerText = `${rand}%`;
+      }
+    }, 3000);
+
+    // ── Utility Helper ──────────────────────────────────────────────
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      
+      toastMsg.innerText = message;
+      toast.style.display = 'flex';
+      
+      // Clear previous timeout if exists
+      if (window.toastTimeout) clearTimeout(window.toastTimeout);
+      
+      window.toastTimeout = setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.2s ease-in forwards';
+        setTimeout(() => {
+          toast.style.display = 'none';
+          toast.style.animation = '';
+        }, 200);
+      }, 2500);
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+    }
+
+    // Trigger Initial Routing
+    handleRouting();
+  </script>
+</body>
+</html>

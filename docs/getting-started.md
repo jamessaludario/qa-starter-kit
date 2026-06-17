@@ -7,8 +7,8 @@ This guide walks you through setting up your QA automation project from scratch.
 You need:
 - Node.js 18 or higher — [nodejs.org](https://nodejs.org)
 - Git — [git-scm.com](https://git-scm.com)
-- An AI coding agent (see [agent-setup.md](agent-setup.md))
-- A web app you want to test
+- A web app you want to test (or use our built-in Sandbox Demo App if learning!)
+- An AI coding agent (optional if writing manually, see [agent-setup.md](agent-setup.md) for AI generation)
 
 ## Step 1 — Create your project
 
@@ -50,12 +50,18 @@ npx playwright install
 cp .env.example .env
 ```
 
-Open `.env` and fill in at minimum:
+Open `.env` and configure your credentials. If you are learning with our built-in Demo App:
 ```
-BASE_URL=https://your-app.com
-APP_NAME=Your App Name
+BASE_URL=http://localhost:3000
+APP_NAME=QA Academy Sandbox
 APP_ROLES=guest,user,admin
 ```
+
+To run the Demo App:
+```bash
+npm run demo
+```
+Leave this running in a separate terminal.
 
 ## Step 4 — Set up auth (if your app has login)
 
@@ -66,15 +72,19 @@ npm run auth
 This opens a browser. Log in manually, then press Enter in the terminal.
 Your session is saved to `auth/` and used by all future test runs.
 
-## Step 5 — Generate tests
+## Step 5 — Run or Generate Tests
 
-Open your AI agent in the project folder and paste the contents of `prompts/00-quick-start.md`.
+If you are following the educational path:
+1. Open the [Tutorial Guide](tutorial.md) and review the manual code.
+2. Run the pre-written demo tests:
+   ```bash
+   npm test
+   ```
 
-The agent will:
-1. Scan all pages of your app
-2. Create Page Object Models
-3. Write baseline tests for every page
-4. Run the tests and report results
+If you are using the AI-assisted generation path:
+1. Open your AI agent in the project folder.
+2. Paste the contents of `prompts/00-quick-start.md`.
+3. The agent will automatically scan pages, build Page Objects, and generate tests.
 
 ## Step 6 — Run tests
 

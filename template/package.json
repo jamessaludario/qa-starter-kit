@@ -13,7 +13,8 @@
     "auth": "playwright test setup/auth.setup.ts --headed",
     "typecheck": "tsc --noEmit",
     "scan": "ts-node --esm scripts/scan.ts",
-    "rescan": "ts-node --esm scripts/rescan.ts"
+    "rescan": "ts-node --esm scripts/rescan.ts",
+    "demo": "ts-node --esm scripts/demo-server.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0",

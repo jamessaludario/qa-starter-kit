@@ -34,9 +34,9 @@ async function scaffold(): Promise<void> {
     'my-app'
   )
   const appUrl = (
-    await ask('Your app URL (e.g. https://my-app.com): ') ||
+    await ask('Your app URL (default: http://localhost:3000): ') ||
     process.env.BASE_URL ||
-    ''
+    'http://localhost:3000'
   )
   const appDesc = (
     await ask('Describe your app in one sentence: ') ||
@@ -115,6 +115,20 @@ async function scaffold(): Promise<void> {
     path.join(targetDir, 'docs')
   )
   console.log('📚  Docs copied')
+
+  // ── Copy scripts/ ────────────────────────────────────────────────────────
+
+  await fs.copy(
+    path.join(kitRoot, 'scripts'),
+    path.join(targetDir, 'scripts'),
+    {
+      filter: (src) => {
+        const base = path.basename(src)
+        return base !== 'scaffold.ts' && base !== 'scaffold.js'
+      }
+    }
+  )
+  console.log('⚡️  Scripts copied')
 
   // ── Write .env ───────────────────────────────────────────────────────────
 
