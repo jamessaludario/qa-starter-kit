@@ -1,5 +1,10 @@
 # Learn Test Automation 101
 
+> 👋 **Brand new and want something hands-on first?** Run `npm run tour` for an
+> interactive walkthrough that builds and runs your first test with you, then come
+> back here. For the concepts in plain English, see
+> [learn-qa-automation.md](learn-qa-automation.md).
+
 Welcome! This guide is designed for beginners who want to learn how web test automation works, how to build it from scratch, and how to combine it with AI coding agents.
 
 Instead of writing tests for external live websites (which can block you, load slowly, or change unexpectedly), this kit includes a **built-in local Sandbox Demo Application** that runs on your computer.

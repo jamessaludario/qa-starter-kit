@@ -7,9 +7,15 @@
     "scaffold": "ts-node --esm scripts/scaffold.ts",
     "scan": "ts-node --esm scripts/scan.ts",
     "rescan": "ts-node --esm scripts/rescan.ts",
-    "demo": "ts-node --esm scripts/demo-server.ts"
+    "demo": "ts-node --esm scripts/demo-server.ts",
+    "tour": "ts-node learn/tour.ts",
+    "learn": "ts-node learn/tour.ts",
+    "learn:sample": "playwright test --config learn/playwright.config.ts sample.todo.spec.ts",
+    "learn:lessons": "playwright test --config learn/playwright.config.ts lessons",
+    "learn:report": "playwright show-report learn/playwright-report"
   },
   "devDependencies": {
+    "@playwright/test": "^1.44.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.14.0",
     "dotenv": "^16.4.5",

@@ -7,6 +7,28 @@
 
 ---
 
+## 🌱 New to QA automation? Start here
+
+Never written an automated test before? Don't read the docs yet — **do** the
+guided tour. It builds and runs your first real test with you, one small step at
+a time, against a free practice site (no login, no setup):
+
+```bash
+npm install
+npx playwright install
+npm run tour
+```
+
+That's it. About 10 minutes, fully hands-on, and you can quit and resume any time.
+
+Want the concepts in writing too? See the plain-language guide:
+[**docs/learn-qa-automation.md**](docs/learn-qa-automation.md). Prefer to read a
+finished example? [`learn/tests/sample.todo.spec.ts`](learn/tests/sample.todo.spec.ts)
+is one working test explained line by line, and [`learn/lessons/`](learn/lessons)
+has six bite-sized exercises (`npm run learn:lessons`).
+
+---
+
 ## What is this?
 
 A hybrid learning playground and ready-made **Playwright + TypeScript** test suite setup. It allows you to:
@@ -99,6 +121,17 @@ npm run report          # open HTML test execution report
 npx playwright install  # install browser binaries (first time only)
 ```
 
+### Beginner learning commands
+
+> Run these from the **starter kit root** (no scaffolding needed)
+
+```bash
+npm run tour            # interactive, guided "build your first test" walkthrough
+npm run learn:sample    # run the annotated sample test (learn/tests/sample.todo.spec.ts)
+npm run learn:lessons   # run the six bite-sized lessons in learn/lessons/
+npm run learn:report    # open the learning track's HTML report
+```
+
 ---
 
 ## Folder Structure
@@ -165,6 +198,7 @@ See [docs/how-it-works.md](docs/how-it-works.md) for the full pipeline.
 
 ## Need help?
 
+- [**Learn QA Automation from zero**](docs/learn-qa-automation.md) ← start here if you're brand new (`npm run tour`)
 - [Beginner Tutorial Guide](docs/tutorial.md)
 - [Getting Started](docs/getting-started.md)
 - [How it Works](docs/how-it-works.md)

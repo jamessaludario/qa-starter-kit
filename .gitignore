@@ -19,3 +19,9 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Beginner learning track — generated at runtime
+learn/.tour-progress.json
+learn/playwright-report/
+learn/test-results/
+learn/tests/my-first-test.spec.ts
