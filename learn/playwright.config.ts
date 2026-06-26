@@ -13,10 +13,12 @@ import { defineConfig, devices } from '@playwright/test'
  * It is free, public, requires no account, and is perfect for practising the
  * core loop: load a page → find an element → type → click → assert.
  *
- * You can point these lessons at a different URL by setting LEARN_BASE_URL,
- * but the default works out of the box.
+ * baseURL is the site ORIGIN (https://demo.playwright.dev); the specs navigate
+ * to the '/todomvc' route on top of it (e.g. page.goto('/todomvc')). Point the
+ * lessons at a different origin by setting LEARN_BASE_URL; the default works
+ * out of the box.
  */
-const BASE_URL = process.env.LEARN_BASE_URL ?? 'https://demo.playwright.dev/todomvc'
+const BASE_URL = process.env.LEARN_BASE_URL ?? 'https://demo.playwright.dev'
 
 export default defineConfig({
   // Where the lesson/sample/your-first-test specs live.

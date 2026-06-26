@@ -7,7 +7,7 @@
 import { test, expect } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/todomvc')
   // Start each test with one to-do already added, so there's something to click.
   const newTodo = page.getByPlaceholder('What needs to be done?')
   await newTodo.fill('Tidy my desk')

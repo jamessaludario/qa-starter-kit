@@ -142,7 +142,7 @@ examples in `template/page-objects/`.
 
 Almost every test follows the same three beats:
 
-1. **Arrange** — get to a known starting point (`await page.goto('/')`).
+1. **Arrange** — get to a known starting point (`await page.goto('/todomvc')`).
 2. **Act** — do what a user would do (`fill`, `press`, `click`).
 3. **Assert** — check the result (`await expect(...)...`).
 
@@ -151,7 +151,7 @@ Here's the whole thing in nine lines:
 
 ```typescript
 test('adding a to-do works', async ({ page }) => {
-  await page.goto('/')                                         // Arrange
+  await page.goto('/todomvc')                                         // Arrange
   const box = page.getByPlaceholder('What needs to be done?')
   await box.fill('Buy milk')                                   // Act
   await box.press('Enter')

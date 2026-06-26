@@ -91,9 +91,9 @@ const FILE_HEADER = `import { test, expect } from '@playwright/test'
 
 test.describe('My first test', () => {
   test.beforeEach(async ({ page }) => {
-    // Open the app fresh before each test. '/' uses the baseURL from
-    // learn/playwright.config.ts (the TodoMVC demo site).
-    await page.goto('/')
+    // Open the app fresh before each test. The baseURL (in
+    // learn/playwright.config.ts) is the site origin; '/todomvc' is the route.
+    await page.goto('/todomvc')
   })
 `
 

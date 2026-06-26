@@ -31,11 +31,11 @@ test.describe('TodoMVC — my first real test', () => {
   // `async ({ page }) => { ... }` hands us a `page`: a single browser tab that
   // Playwright controls for us.
   test.beforeEach(async ({ page }) => {
-    // `page.goto` navigates the tab to a URL. We pass '/' because the baseURL
-    // (the TodoMVC site) is already set in learn/playwright.config.ts, so '/'
-    // means "the home page of that site". `await` means "wait for this to
-    // finish before moving on" — almost every Playwright action needs `await`.
-    await page.goto('/')
+    // `page.goto` navigates the tab to a URL. The baseURL in
+    // learn/playwright.config.ts is the site's origin (https://demo.playwright.dev),
+    // and '/todomvc' is the route — together they make the full TodoMVC page URL.
+    // `await` means "wait for this to finish" — almost every Playwright action needs it.
+    await page.goto('/todomvc')
   })
 
   test('adding a to-do shows it in the list', async ({ page }) => {
